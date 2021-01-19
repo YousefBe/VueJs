@@ -15,15 +15,19 @@
       <router-view></router-view>
     </base-card>
   </section>
-  <section>
-    <base-badge
-      v-for="area in areas"
-      :key="area"
-      :type="area"
-      :title="area"
-    ></base-badge>
-    {{ description }}
-  </section>
+  <base-card>
+    <section>
+      <base-badge
+        v-for="area in areas"
+        :key="area"
+        :type="area"
+        :title="area"
+      ></base-badge>
+      <p>
+        {{ description }}
+      </p>
+    </section></base-card
+  >
 </template>
 
 <script>

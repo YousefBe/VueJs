@@ -31,11 +31,11 @@ export default {
   methods: {
     setFilter(eve) {
       const inputId = eve.target.id;
-      const isActive = eve.target.checked;
+      const changed = eve.target.checked;
       const updateFilters = {
         //   gdeda d
         ...this.filters,
-        [inputId]: isActive
+        [inputId]: changed
       };
       this.filters = updateFilters;
       this.$emit('change-filters', updateFilters);
