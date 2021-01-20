@@ -16,7 +16,7 @@
         type="text"
         id="lastname"
         v-model.trim="lastName.val"
-        @blur="clearError('lastname')"
+        @blur="clearError('lastName')"
       />
       <p v-if="!lastName.isValid">You must enter a last name</p>
     </div>
@@ -152,6 +152,7 @@ export default {
       this.$emit('saveData', formData);
     }
   },
+
   emits: ['saveData']
 };
 </script>

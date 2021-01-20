@@ -14,6 +14,8 @@ export default {
   },
   methods: {
     SaveData(data) {
+      console.log(data);
+      console.log('from save Data');
       this.$store.dispatch('coachesModule/saveCoach', data);
       this.$router.push('/');
     }

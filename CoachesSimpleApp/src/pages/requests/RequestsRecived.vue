@@ -1,42 +1,69 @@
 <template>
-  <section>
-    <base-card>
-      <header>
-        <h2>Requests Recived</h2>
-      </header>
+  <div>
+    <base-dialog :show="!!error" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <base-card>
+        <header>
+          <h2>Requests Recived</h2>
+        </header>
+        <base-spinner v-if="isLoading"></base-spinner>
+        <ul v-else-if="hasRequests && !isLoading">
+          <single-request
+            v-for="request in recivedRequests"
+            :key="request.id"
+            :email="request.userEmail"
+            :message="request.message"
+          ></single-request>
+        </ul>
 
-      <ul v-if="hasRequests">
-        <single-request
-          v-for="request in recivedRequests"
-          :key="request.id"
-          :email="request.userEmail"
-          :message="request.userMessage"
-        ></single-request>
-      </ul>
-
-      <h3 v-else>
-        you have no requests yet
-      </h3>
-    </base-card>
-  </section>
+        <h3 v-else>
+          you have no requests yet
+        </h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
 import SingleRequest from '../../components/requests/singleRequest.vue';
 import baseCard from '../../Globals/baseCard.vue';
+import BaseSpinner from '../../Globals/BaseSpinner.vue';
 export default {
-  components: { baseCard, SingleRequest },
-  // solving an error ,
-  // created() {
-  //   console.log(this.$store.getters['requestsModule/allRequests']);
-  //   console.log(this.recivedRequests);
-  // },
+  components: { baseCard, SingleRequest, BaseSpinner },
+
+  data() {
+    return {
+      isLoading: false,
+      error: null
+    };
+  },
+  created() {
+    console.log(this.hasRequests);
+
+    this.loadRequests();
+  },
   computed: {
     recivedRequests() {
       return this.$store.getters['requestsModule/allRequests'];
     },
     hasRequests() {
       return this.$store.getters['requestsModule/hasRequests'];
+    }
+  },
+  methods: {
+    async loadRequests() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('requestsModule/fetchRequsets');
+      } catch (error) {
+        this.error = error.message || 'feh 7aga 8alt';
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     }
   }
 };
