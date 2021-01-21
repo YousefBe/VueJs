@@ -18,9 +18,6 @@
 
 <script>
 export default {
-  created() {
-    console.log(this.id);
-  },
   props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
   computed: {
     fullName() {

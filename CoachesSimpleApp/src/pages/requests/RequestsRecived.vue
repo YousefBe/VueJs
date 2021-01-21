@@ -14,7 +14,7 @@
             v-for="request in recivedRequests"
             :key="request.id"
             :email="request.userEmail"
-            :message="request.message"
+            :message="request.userMessage"
           ></single-request>
         </ul>
 
@@ -39,11 +39,7 @@ export default {
       error: null
     };
   },
-  created() {
-    console.log(this.hasRequests);
 
-    this.loadRequests();
-  },
   computed: {
     recivedRequests() {
       return this.$store.getters['requestsModule/allRequests'];

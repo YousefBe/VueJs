@@ -39,8 +39,11 @@ export default {
 
     async fetchRequsets(context) {
       const coachId = context.rootGetters.userId;
+      const token = context.rootGetters.token;
+      console.log(token);
       const response = await fetch(
-        `https://coachesproject-ae2c8-default-rtdb.firebaseio.com/requests/${coachId}.json`
+        `https://coachesproject-ae2c8-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=` +
+          token
       );
       const responseData = await response.json();
 

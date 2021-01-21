@@ -7,7 +7,15 @@
       <ul>
         <li>
           <router-link to="/">All coaches</router-link>
+        </li>
+        <li v-if="isLoggedIn">
           <router-link to="/requests">requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">login</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+          <base-button @click="loggout">Logout</base-button>
         </li>
       </ul>
     </nav>
@@ -15,7 +23,21 @@
 </template>
 
 <script>
-export default {};
+import baseButton from '../Globals/baseButton.vue';
+export default {
+  components: { baseButton },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuth;
+    }
+  },
+  methods: {
+    loggout() {
+      this.$store.dispatch('logout');
+      this.$router.replace('/auth');
+    }
+  }
+};
 </script>
 
 <style scoped>

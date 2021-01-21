@@ -39,6 +39,7 @@ export default {
   actions: {
     async loadCoaches(context, payload) {
       // console.log('created');
+      // console.log(context);
       // we don't wanna load every time we refresh so use this pattern
       if (!payload.forceRefresh && !context.getters.shouldUpdate) {
         return;
@@ -81,8 +82,11 @@ export default {
         hourlyRate: payload.rate
       };
 
+      const token = context.rootGetters.token;
+
       const response = await fetch(
-        `https://coachesproject-ae2c8-default-rtdb.firebaseio.com/coaches/${UserId}.json`,
+        `https://coachesproject-ae2c8-default-rtdb.firebaseio.com/coaches/${UserId}.json?auth=` +
+          token,
         {
           method: 'PUT',
           body: JSON.stringify(coachStructure)
